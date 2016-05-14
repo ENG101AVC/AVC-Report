@@ -1,0 +1,91 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage{amsmath,amsfonts,amsthm, amssymb} % Math packages
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+%---------
+%CITATIONS
+%---------
+\usepackage{csquotes}
+\usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[american]{babel} % English language/hyphenation
+\DeclareLanguageMapping{america}{american-apa}
+\addbibresource{sources.bib}
+\graphicspath{ { img/ } }
+
+
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+%\numberwithin{tabular}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{
+\normalfont \normalsize
+\textsc{Victoria University, ENGR101} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge AVC Progress Report\\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Jacob Beal} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Abstract}
+The Following Lab Report details how the application of fundamental engineering
+concepts could be used in such a way to construct and operate an Autonomous
+Vehicle. This report will detail the design, construction, and programming
+decision that we made, the final outcome of the project and the end results,
+and in particular issues that arose, and how this was resolved.\\
+
+Insert Results blurb here:\\
+$$y=\frac{1}{\sqrt{2\pi}}e^{\frac{x^2}{2}}$$
+\section{Introduction}
+\subsection{Purpose}
+\subsection{Problem}
+The challenge of a self-driving car is not immediately intuitive; the act of
+simply ``following a line``
+\subsection{Scope}
+\section{Background}
+\subsection{Theory}
+\subsection{Research}
+\section{Test and Evaluation}
+\subsection{Apparatus}
+\subsection{Procedure}
+\section{Findings}
+\subsection{Data}
+\subsection{Interpretation}
+\section{Conclusion}
+\subsection{Assessment}
+\subsection{Reccommendations}
+
+\printbibliography
+\end{document}
