@@ -90,7 +90,21 @@ variable. This variable is then computed in such a fashion as to deliver an
 output which is used in such a method to influence the physical variable the
 next time the loop is checked.\cite{elfClosedLoops}
 
+A closed loop system is useful in the ``follow the line`` section of the AVC
+where a difference in position of the line and the centre of the camera, which
+can be used to generate a difference in wheel speed. This difference in wheel
+speed can cause a turn in the vehicle
+
 \subsubsection{PID}
+\textit{PID} stands for \textit{Proportional, Integral and Derivative} response
+to a change in the conditions in a closed loop.\\
+A proportional response is the current conditions and how it responds to them
+immediately. i.e. the further the object is from the line, the stronger
+corrective response is.\\
+A integral response checks over time to see whether the car is on one side too
+often, and compensates accordingly.\\
+A derivative response is related to how quickly the proportional response
+changes, and therefore turns the car the other way when it approaches the line.
 \subsection{Research}
 \section{Test and Evaluation}
 \subsection{Apparatus}
