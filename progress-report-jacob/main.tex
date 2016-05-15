@@ -15,6 +15,7 @@
 %---------
 \usepackage{csquotes}
 \usepackage[style=apa,backend=biber]{biblatex}
+%\usepackage{apacite}
 \usepackage[american]{babel} % English language/hyphenation
 \DeclareLanguageMapping{america}{american-apa}
 \addbibresource{sources.bib}
@@ -70,12 +71,26 @@ Insert Results blurb here:\\
 $$y=\frac{1}{\sqrt{2\pi}}e^{\frac{x^2}{2}}$$
 \section{Introduction}
 \subsection{Purpose}
+The purpose of the AVC is to demonstrate engineering skills taught in the
+ENGR101 Labs; and to work as a team to create an autonomous vehicle.
 \subsection{Problem}
 The challenge of a self-driving car is not immediately intuitive; the act of
 simply ``following a line``
 \subsection{Scope}
+The scope of this project was using C/C++, the ENGR101 C Library and skills we
+have learned in the Labs for the project. This includes \textit{PID} Error
+Correction (Proportional, Integral and Derivative Responses) to follow the 
+white line and other techniques taught in lectures.
+
 \section{Background}
 \subsection{Theory}
+\subsubsection{Closed Loops}
+A closed loop system is a system which constantly loops, checking a physical
+variable. This variable is then computed in such a fashion as to deliver an
+output which is used in such a method to influence the physical variable the
+next time the loop is checked.\cite{elfClosedLoops}
+
+\subsubsection{PID}
 \subsection{Research}
 \section{Test and Evaluation}
 \subsection{Apparatus}
