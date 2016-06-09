@@ -79,8 +79,8 @@ The purpose of the AVC is to demonstrate engineering skills taught in the
 ENGR101 Labs; and to work as a team to create an autonomous vehicle. This is
 used to solidify the teams understanding of fundamental Engineering concepts.
 \subsection{Problem}
-The challenge of a self-driving car is not immediately intuitive; the act of%TODO
-simply ``following a line``. This involves computing the relative position of
+The challenge of a self-driving car is not immediately intuitive; the act of %TODO
+simply ``following a line''. This involves computing the relative position of
 the vehicle compared to the line. The team employed other methods, by tracking
 the relative position over time, that will be detailed later in the report.
 \subsection{Scope}
@@ -89,7 +89,7 @@ have learned in the Labs for the project. This includes \textit{PID} Error
 Correction (Proportional, Integral and Derivative Responses) to follow the 
 white line and other techniques taught in lectures.\\
 We are also limited by our budget of $V\$100$ for use at the \textit{``part
-  bazzar``} and the equipment that were provided at the beginning of the
+  bazzar''} and the equipment that were provided at the beginning of the
 project, the Roboshield, motors and Raspberry Pi.
 
 \subsection{Motivation}
@@ -103,7 +103,7 @@ their limitations.
 A closed loop system is a system which constantly loops, checking a physical
 variable. This variable is then computed in such a fashion as to deliver an
 output which is used in such a method to influence the physical variable the
-next time the loop is checked.\footcite{elfClosedLoops}
+next time the loop is checked.\autocite{elfClosedLoops}
 
 A closed loop system is useful in the ``follow the line'' section of the AVC
 where a difference in position of the line and the centre of the camera, which
@@ -139,13 +139,13 @@ Tuning the PID system should be done in the specific order of Proportional,
 Integral then derivative responses. This is because the integral response can
 only be turned following the proportional response, so the offset at the end of
 the sinusoidal activity, and the derivative response merely acts as a
-dampener\footcite{pidTuning}
-\footcite{pidVid}
+dampener\autocite{pidTuning}
+\autocite{pidVid}
 \section{Methods}
 \subsection{Equipment}
 The AVC Project was based on a Raspberry Pi and the Roboshield.\\
 The Autonomous vehicle was built with a `PiCam' camera (provided), a pair of
-motors (provided), 2 `Sharp GP2Y0A41SK0F Analog Distance' sensors, a 3D printed
+motors (provided), a LiFe , 2 `Sharp GP2Y0A41SK0F Analog Distance' sensors, a 3D printed
 chassis, and half a ping pong ball.
 \subsection{Procedure}
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -156,9 +156,8 @@ chassis, and half a ping pong ball.
 \end{wrapfigure}
 The team first designed the layout of the vehicle. The chosen design is based
 primarily on the given initial board. From this the motors were mounted at the
-front (See Fig 4.1), and the rear wheel, a semi-sphere, was chosen. A
-semi-sphere was chosen so that it had no bias in direction, nor resistance to
-change in direction, so that it could react better to change in direction.\\
+front (See Fig 4.1), and the rear wheel, a mounted semi-sphere.\\
+From there the network code to deal with the \textit{portcullis}, found in 
 
 \section{Results}
 \subsection{Data}
@@ -246,4 +245,19 @@ to raise and lower as required.
   \scalecheck & Theo     & Attaching sensors to navigate Quadrant 4\\
               & Julius   & Contribute in some way\\
 \end{tabularx}
+\subsection{Code Excerpts}
+\subsubsection{Networking for Portcullis}
+\begin{verbatim}
+void network(){
+	char message[24];							// Assigns memory to password.
+
+	connect_to_server("130.195.6.196", 1024);	// Connects to Gate.
+	send_to_server("Please");					// Requests permission.
+
+	receive_from_server(message);				// Assigns the password to 'message'.
+	send_to_server(message);					// Sends password to server
+
+	printf(message);
+}
+\end{verbatim}
 \end{document}
