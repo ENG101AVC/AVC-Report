@@ -66,6 +66,7 @@
 \pagebreak
 \tableofcontents
 \pagebreak
+
 \section{Abstract}
 The Following Lab Report details how the application of fundamental engineering
 concepts could be used in such a way to construct and operate an Autonomous
@@ -74,7 +75,12 @@ decision that we made, the final outcome of the project and the end results,
 and in particular issues that arose, and how this was resolved.\\
 
 The Robot in question did not complete the entire maze, and did not complete the
-Third Quadrant.
+third quadrant.
+
+
+
+
+
 \section{Introduction}
 \subsection{Motivation}
 The purpose of the AVC is to demonstrate engineering skills taught in the
@@ -99,6 +105,14 @@ Understanding how an AVC works and solving a problem is important to the future,
 with autonomous vehicles increasing in prevalence, and being developed at break
 neck speed, it is of paramount importance that we understand how they work, and
 their limitations.
+
+
+
+
+
+
+
+
 \section{Background}
 \subsection{Theory}
 \subsubsection{Closed Loops}
@@ -149,6 +163,9 @@ dampener\autocite{pidTuning}
   \centering
   \caption{The Maze used to test the Autonomous vehicle}
 \end{figure}
+
+
+
 \section{Methods}
 \subsection{Equipment}
 The AVC Project was based on a Raspberry Pi and the Roboshield.\\
@@ -162,46 +179,87 @@ chassis, and half a ping pong ball.
     \caption{A top-down view of the design chosen for the AVC}
   \end{center}
 \end{wrapfigure}
-The team first designed the layout of the vehicle. The chosen design is based
+\subsubsection{Hardware}
+The team first designed the layout of the vehicle. Such that any decisions made
+in the code for the  The chosen design is based
 primarily on the given initial board. From this the motors were mounted at the
 front (See Fig 4.1), and the rear wheel, a mounted semi-sphere.\\
 From there the network code to deal with the \textit{portcullis}, found in
 Appendix %TODO: add link and find the number l8r
 .\\
+\subsubsection{Software}
 The team then worked on a \textit{PID} system to model the behaviour of the
-motor for Quadrant 2. Given a \\
-From here the team worked to make the `line maze' (Quadrant 3), navigable. The
+motor for quadrant 2. Given a \\
+From here the team worked to make the `line maze' (quadrant 3), navigable. The
 team completed the code to make this work, however the numerous bugs caused it
 to fail at this stage.
+
 \section{Results}
 The vehicle was unable to complete the course and ended half way through the
 third quadrant. Upon reaching a terminus of a line, instead of doing a $180\deg$
-turn. The vehicle went onto the `correct path'
+turn. The vehicle went onto the `correct path'.\\
+The \verb|CONSTANT_PROPORTIONAL| was set to $500$. This reflects the fact that
+the 
+
 \section{Discussion}
-The decision to not have a rear wheel, was made because it would give a greater
-ability to turn the vehicle and make the AVC more responsive to the change in
-environment.\\
-For a week the camera was not correctly plugged in. As a result the team was
-left behind and was unable to complete the project. Following this, the hard
-coded values the team chose to use were incorrect and the code that translated
-the track into a proportional error did not work, and it believed that it had no
-track.\\
+\subsection{Team}
+The team had a good general cohesion on the whole, and worked well cooperatively
+together during lab sessions. This had a positive effect overall as it led to
+better communication of ideas and improved the quality of the vehicle overall.
+
+The lead developer had a general lack of availability due to them
+taking \textit{PHYS114}, which consumed alot of their time. This meant that
+meetings were less frequent than desired and that bursts of work were
+sporadic and more long-winded. Overall this had a negative impact upon the
+project as the team had less time and less updates on the progress of individual
+aspects of the project.  This led to increased stress in the team, and a slower
+development cycle overall. To resolve this in the future more frequent 15 minute
+meetings, via a VOIP service, such as google hangouts or skype, would better
+keep everyone informed, and allow swifter and more productive use of time\\
+
+The loss of a team member immediately set the team back, and meant that the
+amount of time each member had to contribute was greater than other teams. This
+decreased team productivity, and led to more stress within the team itself. The
+increased workload led to a lower quality of work overall and had a negative
+impact upon the project itself. In the future the team needed to better manage
+time together to keep development on track.\\
+
+\subsection{Hardware}
+The decision to not have a rear wheel and instead have a semisphere from a ping
+pong ball. This was made because it would give a greater ability to turn the
+vehicle and make the AVC more responsive to the change in environment. This was
+beneficial in the second quadrant\\
+
+The camera was not correctly plugged in upon initial construction.  As a result
+the team fell behind their schedule and was unable to complete the project. 
+As a result of this, the PID system that was developed during that period was
+ineffective and incorrect as it caused issues that otherwise would not have
+existed\\
+
+\subsection{Software}
 The co-efficient of proportionality is much higher then derivative which is
 higher than the integral response, to better respond to the present situation.\\
 Following a mistake by members of the team in the final weeks, an incorrectly
 merged git commit caused the loss of the weeks work, this resulted in the team
-being left even further behind then previously.\\
-However because of time restraints and loss of functioning PID code, the team
-took the decision to make a Proportional system as opposed to a PID one. The
-constant of proportionality was set to much higher than previously set and as a
-result.\\
+being left even further behind then previously. From this the team decided to
+only make changes to the code via the github.com UI such that it is always upto
+date and so that no merge commits would have to be done\\
+
+Because of time restraints and loss of functioning PID code in the git merge,
+the teams took the decision to make a Proportional system as opposed to a PID
+one. The constant of proportionality was set to much higher than previously set
+and the the speed to be much lower. This would mean that less damping would be
+needed (via the differential component of PID) and it freed up development time
+to complete the third quadrant.\\
+
 \section{Conclusion}
-\subsection{Assessment}
-\subsection{Recommendations}
-\section{Bibliography}
+
 \printbibliography{}
+
 \section{Appendix}
+
 \subsection{Weekly Log}
+
 \subsubsection*{Week 1}
 \begin{tabularx}{\textwidth}{clX}
   \scalecheck & ALL      & Construct a Project Plan and Contact Julius\\
@@ -212,6 +270,7 @@ result.\\
   \scalecheck & Theo     & Make a general plan for the chassis\\
   \scalecheck & Julius   & Get in contact with the group
 \end{tabularx}
+
 \subsubsection*{Week 2}
 \begin{tabularx}{\textwidth}{clX}
   \scalecheck  & ALL      & Discuss ideas and start on the AVC Code\\
@@ -222,6 +281,7 @@ result.\\
   \scalecheck  & Theo     & Figure out how to use the CAD software\\
                & Julius   & Show Up --- Not turned up --- Postponed\\
 \end{tabularx}
+
 \subsubsection*{Week 3}
 \begin{tabularx}{\textwidth}{clX}
   \scalecheck & ALL      & Progress update with team members and begin writing progress report\\
@@ -232,16 +292,19 @@ result.\\
   \scalecheck & Theo     & Create a non-powered wheel case and battery case for the robot\\
               & Julius   & Show up and contribute to team meetings\\
 \end{tabularx}
+
 \subsubsection*{Week 4}
 \begin{tabularx}{\textwidth}{clX}
   \scalecheck & ALL      & Progress update with team members\\
-  \scalecheck & Rhaz     & Quadrant 1 completed\\
-  \scalecheck & Jacob    & Quadrant 1 completed\\
-  \scalecheck & Andrew   & Quadrant 1 completed\\
+  \scalecheck & Rhaz     & quadrant 1 completed\\
+  \scalecheck & Jacob    & quadrant 1 completed\\
+  \scalecheck & Andrew   & quadrant 1 completed\\
   \scalecheck & Mitchell & Assist in hardware and pre-reading for quadrant 2\\
+
               & Theo     & Attach sensors to robot so it can detect the maze and obstructions --- postponed as code not up to that section yet.\\
               & Julius   & Contribute in some way\\
 \end{tabularx}
+
 \subsubsection*{Week 5}
 \begin{tabularx}{\textwidth}{clX}
   \scalecheck & ALL      & Progress update with team members\\
@@ -252,17 +315,20 @@ result.\\
   \scalecheck & Theo     & Make battery clip easier\\
               & Julius   & Contribute in some way\\
 \end{tabularx}
+
 \subsubsection*{Week 6}
 \begin{tabularx}{\textwidth}{clX}
-              & ALL      & Quadrant 3 complete\\
-              & Rhaz     & Quadrant 3 complete\\
-              & Jacob    & Quadrant 3 complete\\ 
-              & Andrew   & Quadrant 3 complete\\ 
-              & Mitchell & Quadrant 3 complete\\ 
-  \scalecheck & Theo     & Attaching sensors to navigate Quadrant 4\\
+              & ALL      & quadrant 3 complete\\
+              & Rhaz     & quadrant 3 complete\\
+              & Jacob    & quadrant 3 complete\\ 
+              & Andrew   & quadrant 3 complete\\ 
+              & Mitchell & quadrant 3 complete\\ 
+  \scalecheck & Theo     & Attaching sensors to navigate quadrant 4\\
               & Julius   & Contribute in some way\\
 \end{tabularx}
+
 \subsection{Code Excerpts}
+
 \subsubsection{Networking for Portcullis}
 \begin{verbatim}
 void network(){
@@ -277,10 +343,11 @@ void network(){
 	printf(message);
 }
 \end{verbatim}
+
 \subsubsection{Straight Line}
 \begin{verbatim}
-set_motor(1,  100);
-set_motor(2, -100);
+set_motor(1, 100);
+set_motor(2, 100);
 Sleep(1,0);
 set_motor(1, 0);
 set_motor(2, 0);
