@@ -13,7 +13,7 @@
 %---------
 %CITATIONS
 %---------
-\usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[backend=biber]{biblatex}%TODO: fix to APA
 \usepackage{csquotes}
 \usepackage[american]{babel} % English language/hyphenation
 \DeclareLanguageMapping{american}{american-apa}
@@ -63,7 +63,9 @@
 \date{\normalsize\today} % Today's date or a custom date
 \begin{document}
 \maketitle
+\pagebreak
 \tableofcontents
+\pagebreak
 \section{Abstract}
 The Following Lab Report details how the application of fundamental engineering
 concepts could be used in such a way to construct and operate an Autonomous
@@ -141,6 +143,12 @@ only be turned following the proportional response, so the offset at the end of
 the sinusoidal activity, and the derivative response merely acts as a
 dampener\autocite{pidTuning}
 \autocite{pidVid}
+\subsection{The Maze}
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{maze}
+  \centering
+  \caption{The Maze used to test the Autonomous vehicle}
+\end{figure}
 \section{Methods}
 \subsection{Equipment}
 The AVC Project was based on a Raspberry Pi and the Roboshield.\\
@@ -158,28 +166,35 @@ The team first designed the layout of the vehicle. The chosen design is based
 primarily on the given initial board. From this the motors were mounted at the
 front (See Fig 4.1), and the rear wheel, a mounted semi-sphere.\\
 From there the network code to deal with the \textit{portcullis}, found in
-Appendix %TODO:
-
-
+Appendix %TODO: add link and find the number l8r
+.\\
+The team then worked on a \textit{PID} system to model the behaviour of the
+motor for Quadrant 2. Given a \\
+From here the team worked to make the `line maze' (Quadrant 3), navigable. The
+team completed the code to make this work, however the numerous bugs caused it
+to fail at this stage.
 \section{Results}
-\subsection{Data}
-The gate at the beginning now opens on request.
-\begin{figure}[h]
-  \includegraphics[width=\textwidth]{maze}
-  \centering
-  \caption{The Maze used to test the Autonomous vehicle}
-\end{figure}
-\subsection{Interpretation}
-\subsection{Discussion}
+The vehicle was unable to complete the course and ended half way through the
+third quadrant. Upon reaching a terminus of a line, instead of doing a $180\deg$
+turn. The vehicle went onto the `correct path'
+\section{Discussion}
 The decision to not have a rear wheel, was made because it would give a greater
 ability to turn the vehicle and make the AVC more responsive to the change in
 environment.\\
+For a week the camera was not correctly plugged in. As a result the team was
+left behind and was unable to complete the project. Following this, the hard
+coded values the team chose to use were incorrect and the code that translated
+the track into a proportional error did not work, and it believed that it had no
+track.\\
 The co-efficient of proportionality is much higher then derivative which is
 higher than the integral response, to better respond to the present situation.\\
-The Camera appears to be broken on further expectation right now, so we can't show
-any results\\
-The networking section, works flawlessly at the present, and causes the bridge
-to raise and lower as required.
+Following a mistake by members of the team in the final weeks, an incorrectly
+merged git commit caused the loss of the weeks work, this resulted in the team
+being left even further behind then previously.\\
+However because of time restraints and loss of functioning PID code, the team
+took the decision to make a Proportional system as opposed to a PID one. The
+constant of proportionality was set to much higher than previously set and as a
+result.\\
 \section{Conclusion}
 \subsection{Assessment}
 \subsection{Recommendations}
@@ -261,5 +276,14 @@ void network(){
 
 	printf(message);
 }
+\end{verbatim}
+\subsubsection{Straight Line}
+\begin{verbatim}
+set_motor(1,  100);
+set_motor(2, -100);
+Sleep(1,0);
+set_motor(1, 0);
+set_motor(2, 0);
+
 \end{verbatim}
 \end{document}
