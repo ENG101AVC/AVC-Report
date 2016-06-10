@@ -87,6 +87,7 @@ The purpose of the AVC is to demonstrate engineering skills taught in the
 ENGR101 Labs; and to work as a team to create an autonomous vehicle. This is
 used to solidify the teams understanding of fundamental Engineering concepts.
 \subsection{Problem}
+%TODO: Fix
 The challenge of a self-driving car is not immediately intuitive; the act of %TODO
 simply ``following a line''. This involves computing the relative position of
 the vehicle compared to the line. The team employed other methods, by tracking
@@ -97,8 +98,8 @@ have learned in the Labs for the project. This includes \textit{PID} Error
 Correction (Proportional, Integral and Derivative Responses) to follow the 
 white line and other techniques taught in lectures.\\
 We are also limited by our budget of $V\$100$ for use at the \textit{``part
-  bazzar''} and the equipment that were provided at the beginning of the
-project, the Roboshield, motors and Raspberry Pi.
+bazzar''} and the equipment that were provided at the beginning of the
+project, the PCB, motors and Raspberry Pi.
 
 \subsection{Motivation}
 Understanding how an AVC works and solving a problem is important to the future,
@@ -143,9 +144,9 @@ often, and compensates accordingly.\\
 A derivative response is related to how quickly the proportional response
 changes, and therefore turns the car the other way when it approaches the line.
 \begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{pid.png}
-  \caption{A PID system diagram\autocite{elfClosedLoops}}
+\centering
+\includegraphics[width=\textwidth]{pid.png}
+\caption{A PID system diagram\autocite{elfClosedLoops}}
 \end{figure}
 \subsubsection{C and Raspberry Pi}
 The project will be written using C++, with  an imported C library for the
@@ -159,40 +160,64 @@ dampener\autocite{pidTuning}
 \autocite{pidVid}
 \subsection{The Maze}
 \begin{figure}[h]
-  \includegraphics[width=\textwidth]{maze}
-  \centering
-  \caption{The Maze used to test the Autonomous vehicle}
+\includegraphics[width=\textwidth]{maze}
+\centering
+\caption{The Maze used to test the Autonomous vehicle}
 \end{figure}
 
 
 
 \section{Methods}
 \subsection{Equipment}
-The AVC Project was based on a Raspberry Pi and the Roboshield.\\
+The AVC Project was based on a Raspberry Pi and the PCB.\\
 The Autonomous vehicle was built with a `PiCam' camera (provided), a pair of
 motors (provided), a LiFe , 2 `Sharp GP2Y0A41SK0F Analog Distance' sensors, a 3D printed
 chassis, and half a ping pong ball.
 \subsection{Procedure}
 \begin{wrapfigure}{r}{0.5\textwidth}
-  \begin{center}
-    \includegraphics[width=0.3\textwidth]{top-down-view}
-    \caption{A top-down view of the design chosen for the AVC}
-  \end{center}
+\begin{center}
+\includegraphics[width=0.3\textwidth]{top-down-view}
+\caption{A top-down view of the design chosen for the AVC}
+\end{center}
 \end{wrapfigure}
 \subsubsection{Hardware}
 The team first designed the layout of the vehicle. Such that any decisions made
-in the code for the  The chosen design is based
-primarily on the given initial board. From this the motors were mounted at the
-front (See Fig 4.1), and the rear wheel, a mounted semi-sphere.\\
-From there the network code to deal with the \textit{portcullis}, found in
-Appendix %TODO: add link and find the number l8r
-.\\
+in the code for the vehicle wouldn't have to be rewritten because of hardware
+decisions to be made later.\\
+
+The chosen design is primarily based on the initial plastic board and building a
+design which would allow both the PCB and the Raspberry Pi, with enough space
+left over such that the battery could be safely held without risking damage to
+it.\\
+
+As such the design was chosen to hold the battery above the PCB and the
+Raspberry Pi, such that it was easy to remove, as it needed to be removed
+between testing periods, and on a stable base attached to the PCB, this was
+aesthetically appeasing and allowed easy access to the power switch. While also
+being smaller than the raised portcullis vertically.\\
+
 \subsubsection{Software}
-The team then worked on a \textit{PID} system to model the behaviour of the
-motor for quadrant 2. Given a \\
-From here the team worked to make the `line maze' (quadrant 3), navigable. The
-team completed the code to make this work, however the numerous bugs caused it
-to fail at this stage.
+The network code was first to be created, to deal with the \textit{portcullis}
+found in quadrant 1. The code in question sends a predetermined message to the
+server using the provided API. The server would return a message which would be
+sent in a message to the server, this would cause the portcullis to raise and
+allow the vehicle to pass beneath. The code in question can be found in Appendix
+2.1.\\%TODO: add link and find the number l8r
+
+The quadrant 2 code works by taking a picture with the `PiCam' and scanning the
+vertical middle of the picture taken. The average `whiteness' of the pixels is
+found, this was used as a threshold for whether a pixel was `white' or
+`black'.\\
+
+The vertical middle pixels were read, and checked against the threshold value to
+see if they were `black' or `white'. Using the position of the pixel against the
+center. A value of in which direction the `white' pixels were. This value was
+multiplied by \verb|CONSTANT_PROPORTIONAL| to find which direction the line was
+in.\\
+
+A case was also added in this section for if the entire screen was black, and to
+reverse back until the line was found again.
+
 
 \section{Results}
 The vehicle was unable to complete the course and ended half way through the
@@ -225,16 +250,21 @@ impact upon the project itself. In the future the team needed to better manage
 time together to keep development on track.\\
 
 \subsection{Hardware}
-The decision to not have a rear wheel and instead have a semisphere from a ping
+The decision to not have a rear wheel and instead have a semi-sphere from a ping
 pong ball. This was made because it would give a greater ability to turn the
 vehicle and make the AVC more responsive to the change in environment. This was
 beneficial in the second quadrant\\
+
+Late into the project the battery clip was redesigned such that the battery was
+more securely held without the screw touching the battery, this was so that in
+the case of a failure or in the case the vehicle is dropped, the battery would
+be largely unaffected and to prevent the Li-Fe battery from leaking.\\
 
 The camera was not correctly plugged in upon initial construction.  As a result
 the team fell behind their schedule and was unable to complete the project. 
 As a result of this, the PID system that was developed during that period was
 ineffective and incorrect as it caused issues that otherwise would not have
-existed\\
+existed.\\
 
 \subsection{Software}
 The co-efficient of proportionality is much higher then derivative which is
@@ -254,7 +284,8 @@ to complete the third quadrant.\\
 
 \section{Conclusion}
 
-\printbibliography{}
+\section{Bibliography}
+\printbibliography
 
 \section{Appendix}
 
@@ -262,69 +293,69 @@ to complete the third quadrant.\\
 
 \subsubsection*{Week 1}
 \begin{tabularx}{\textwidth}{clX}
-  \scalecheck & ALL      & Construct a Project Plan and Contact Julius\\
-  \scalecheck & Rhaz     & Organise Meeting\\
-  \scalecheck & Jacob    & Create GitHub and Establish Facebook Chat\\
-  \scalecheck & Andrew   & Study SSH for Thursday Meeting\\
-  \scalecheck & Mitchell & Study Unit Testing\\
-  \scalecheck & Theo     & Make a general plan for the chassis\\
-  \scalecheck & Julius   & Get in contact with the group
+\scalecheck & ALL      & Construct a Project Plan and Contact Julius\\
+\scalecheck & Rhaz     & Organise Meeting\\
+\scalecheck & Jacob    & Create GitHub and Establish Facebook Chat\\
+\scalecheck & Andrew   & Study SSH for Thursday Meeting\\
+\scalecheck & Mitchell & Study Unit Testing\\
+\scalecheck & Theo     & Make a general plan for the chassis\\
+\scalecheck & Julius   & Get in contact with the group
 \end{tabularx}
 
 \subsubsection*{Week 2}
 \begin{tabularx}{\textwidth}{clX}
-  \scalecheck  & ALL      & Discuss ideas and start on the AVC Code\\
-  \scalecheck  & Rhaz     & Keep up to date on weekly tasks\\
-               & Jacob    & Robot moving in straight line --- appears to work, but haven't tested with a battery yet\\
-  \scalecheck  & Andrew   & Complete the README.md\\
-  \scalecheck  & Mitchell & Look into the networking code, and how it works\\
-  \scalecheck  & Theo     & Figure out how to use the CAD software\\
-               & Julius   & Show Up --- Not turned up --- Postponed\\
+\scalecheck  & ALL      & Discuss ideas and start on the AVC Code\\
+\scalecheck  & Rhaz     & Keep up to date on weekly tasks\\
+& Jacob    & Robot moving in straight line --- appears to work, but haven't tested with a battery yet\\
+\scalecheck  & Andrew   & Complete the README.md\\
+\scalecheck  & Mitchell & Look into the networking code, and how it works\\
+\scalecheck  & Theo     & Figure out how to use the CAD software\\
+& Julius   & Show Up --- Not turned up --- Postponed\\
 \end{tabularx}
 
 \subsubsection*{Week 3}
 \begin{tabularx}{\textwidth}{clX}
-  \scalecheck & ALL      & Progress update with team members and begin writing progress report\\
-  \scalecheck & Rhaz     & Robot Opens Gate\\
-  \scalecheck & Jacob    & Robot Opens Gate\\
-  \scalecheck & Andrew   & Robot Opens Gate\\
-  \scalecheck & Mitchell & Update the README create Hardware updates and assist in the hardware efforts.\\
-  \scalecheck & Theo     & Create a non-powered wheel case and battery case for the robot\\
-              & Julius   & Show up and contribute to team meetings\\
+\scalecheck & ALL      & Progress update with team members and begin writing progress report\\
+\scalecheck & Rhaz     & Robot Opens Gate\\
+\scalecheck & Jacob    & Robot Opens Gate\\
+\scalecheck & Andrew   & Robot Opens Gate\\
+\scalecheck & Mitchell & Update the README create Hardware updates and assist in the hardware efforts.\\
+\scalecheck & Theo     & Create a non-powered wheel case and battery case for the robot\\
+& Julius   & Show up and contribute to team meetings\\
 \end{tabularx}
 
 \subsubsection*{Week 4}
 \begin{tabularx}{\textwidth}{clX}
-  \scalecheck & ALL      & Progress update with team members\\
-  \scalecheck & Rhaz     & quadrant 1 completed\\
-  \scalecheck & Jacob    & quadrant 1 completed\\
-  \scalecheck & Andrew   & quadrant 1 completed\\
-  \scalecheck & Mitchell & Assist in hardware and pre-reading for quadrant 2\\
+\scalecheck & ALL      & Progress update with team members\\
+\scalecheck & Rhaz     & quadrant 1 completed\\
+\scalecheck & Jacob    & quadrant 1 completed\\
+\scalecheck & Andrew   & quadrant 1 completed\\
+\scalecheck & Mitchell & Assist in hardware and pre-reading for quadrant 2\\
 
-              & Theo     & Attach sensors to robot so it can detect the maze and obstructions --- postponed as code not up to that section yet.\\
-              & Julius   & Contribute in some way\\
+& Theo     & Attach sensors to robot so it can detect the maze and obstructions --- postponed as code not up to that section yet.\\
+& Julius   & Contribute in some way\\
 \end{tabularx}
 
 \subsubsection*{Week 5}
 \begin{tabularx}{\textwidth}{clX}
-  \scalecheck & ALL      & Progress update with team members\\
-  \scalecheck & Rhaz     & PID system functioning\\
-  \scalecheck & Jacob    & PID system functioning\\
-  \scalecheck & Andrew   & PID system functioning\\
-  \scalecheck & Mitchell & Bug fixing and tinker with PID constants\\
-  \scalecheck & Theo     & Make battery clip easier\\
-              & Julius   & Contribute in some way\\
+\scalecheck & ALL      & Progress update with team members\\
+\scalecheck & Rhaz     & PID system functioning\\
+\scalecheck & Jacob    & PID system functioning\\
+\scalecheck & Andrew   & PID system functioning\\
+\scalecheck & Mitchell & Bug fixing and tinker with PID constants\\
+\scalecheck & Theo     & Make battery clip easier\\
+& Julius   & Contribute in some way\\
 \end{tabularx}
 
 \subsubsection*{Week 6}
 \begin{tabularx}{\textwidth}{clX}
-              & ALL      & quadrant 3 complete\\
-              & Rhaz     & quadrant 3 complete\\
-              & Jacob    & quadrant 3 complete\\ 
-              & Andrew   & quadrant 3 complete\\ 
-              & Mitchell & quadrant 3 complete\\ 
-  \scalecheck & Theo     & Attaching sensors to navigate quadrant 4\\
-              & Julius   & Contribute in some way\\
+& ALL      & quadrant 3 complete\\
+& Rhaz     & quadrant 3 complete\\
+& Jacob    & quadrant 3 complete\\ 
+& Andrew   & quadrant 3 complete\\ 
+& Mitchell & quadrant 3 complete\\ 
+\scalecheck & Theo     & Attaching sensors to navigate quadrant 4\\
+& Julius   & Contribute in some way\\
 \end{tabularx}
 
 \subsection{Code Excerpts}
@@ -332,15 +363,15 @@ to complete the third quadrant.\\
 \subsubsection{Networking for Portcullis}
 \begin{verbatim}
 void network(){
-	char message[24];							// Assigns memory to password.
+char message[24];							// Assigns memory to password.
 
-	connect_to_server("130.195.6.196", 1024);	// Connects to Gate.
-	send_to_server("Please");					// Requests permission.
+connect_to_server("130.195.6.196", 1024);	// Connects to Gate.
+send_to_server("Please");					// Requests permission.
 
-	receive_from_server(message);				// Assigns the password to 'message'.
-	send_to_server(message);					// Sends password to server
+receive_from_server(message);				// Assigns the password to 'message'.
+send_to_server(message);					// Sends password to server
 
-	printf(message);
+printf(message);
 }
 \end{verbatim}
 
@@ -351,6 +382,61 @@ set_motor(2, 100);
 Sleep(1,0);
 set_motor(1, 0);
 set_motor(2, 0);
+\end{verbatim}
 
+\subsubsection{Average `whiteness' of a picture}
+\begin{verbatim}
+int determine_average(){
+int max = 0;
+int min = 255;
+int average;
+
+take_picture();							// Takes initial picture.
+for(int i = 0; i<320; i++){
+
+if(get_pixel(i, 120, 3)>max){		// Establishes Max.
+max = get_pixel(i, 120, 3);
+}
+
+if(get_pixel(i, 120, 3)<min){		// Establishes Min.
+min = get_pixel(i, 120, 3);
+
+}
+}
+
+average = (max+min)/2;
+return average;
+}
+\end{verbatim}
+\subsubsection{Finding the white bias and hence direction of travel}
+\begin{verbatim}
+for(int i=0; i<320; i++){
+int error = average_error(i);
+
+if(error >= threshold){				// If RPi sees 'white'
+error = 1;						// Converts to binary represenation
+seeLine = true;					// The Line can be seen
+num_of_white++;
+}
+else{								// If RPi sees 'black'
+error = 0;						// Converts to binary representation
+}
+
+current_error = current_error + error*(i-160);
+}
+\end{verbatim}
+Where \verb|average_error| is as follows:\\
+\begin{verbatim}
+int average_error(int i){
+int error1 = get_pixel(i, 116, 3);
+int error2 = get_pixel(i, 118, 3);
+int error3 = get_pixel(i, 120, 3);
+int error4 = get_pixel(i, 122, 3);
+int error5 = get_pixel(i, 124, 3);
+
+int average_error = (int) (error5+error4+error3+error2+error1)/5;
+
+return average_error;
+}
 \end{verbatim}
 \end{document}
