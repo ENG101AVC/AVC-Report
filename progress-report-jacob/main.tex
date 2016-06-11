@@ -13,7 +13,7 @@
 %---------
 %CITATIONS
 %---------
-\usepackage[backend=biber]{biblatex}%TODO: fix to APA
+\usepackage[style=apa,backend=biber]{biblatex}
 \usepackage{csquotes}
 \usepackage[american]{babel} % English language/hyphenation
 \DeclareLanguageMapping{american}{american-apa}
@@ -63,6 +63,9 @@
 \date{\normalsize\today} % Today's date or a custom date
 \begin{document}
 \maketitle
+\begin{center}
+  Lab: Tuesday 9am---1pm\\
+\end{center}
 \pagebreak
 \tableofcontents
 \pagebreak
@@ -82,16 +85,10 @@ third quadrant.
 
 
 \section{Introduction}
-\subsection{Motivation}
+\subsection{Aims}
 The purpose of the AVC is to demonstrate engineering skills taught in the
 ENGR101 Labs; and to work as a team to create an autonomous vehicle. This is
 used to solidify the teams understanding of fundamental Engineering concepts.
-\subsection{Problem}
-%TODO: Fix
-The challenge of a self-driving car is not immediately intuitive; the act of %TODO
-simply ``following a line''. This involves computing the relative position of
-the vehicle compared to the line. The team employed other methods, by tracking
-the relative position over time, that will be detailed later in the report.
 \subsection{Scope}
 The scope of this project was using C/C++, the ENGR101 C Library and skills we
 have learned in the Labs for the project. This includes \textit{PID} Error
@@ -148,31 +145,51 @@ changes, and therefore turns the car the other way when it approaches the line.
 \includegraphics[width=\textwidth]{pid.png}
 \caption{A PID system diagram\autocite{elfClosedLoops}}
 \end{figure}
-\subsubsection{C and Raspberry Pi}
-The project will be written using C++, with  an imported C library for the
-functionality to control the motors and receive input from sensors.\\
-\subsection{Research}
+\subsubsection{Tuning a PID system}
 Tuning the PID system should be done in the specific order of Proportional,
 Integral then derivative responses. This is because the integral response can
 only be turned following the proportional response, so the offset at the end of
 the sinusoidal activity, and the derivative response merely acts as a
-dampener\autocite{pidTuning}
-\autocite{pidVid}
+dampener\autocite{pidTuning}\autocite{pidVid}.\\
+\subsubsection{C and Raspberry Pi}
+The project will be written using C++, with  an imported C library for the
+functionality to control the motors and receive input from sensors.\\
+A Raspberry Pi is a small credit card sized computer that is booted from an SD
+card and generally runs a UNIX based operating system. For this challenge the
+team used Raspberry Pi 2 Model Bs.
 \subsection{The Maze}
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{maze}
 \centering
 \caption{The Maze used to test the Autonomous vehicle}
 \end{figure}
+The Maze is (See fig 3.3) normally split into 4 discrete quadrants as follows:
+\subsubsection{Quadrant 1}
+Quadrant 1 contains a \textit{portcullis} like gate, which is controlled via a
+network response, and following in a straight line along a white strip of
+masking tape\\
 
+\subsubsection{Quadrant 2}
+Quadrant 2 contains a twisting path of white marking tape. Some of which are
+sharp bends and others are more gentle.\\
 
+\subsubsection{Quadrant 3}
+Quadrant 3 contains a `maze' of white masking tape.\\
+It consists of straight lines with intersections and junctions and dead-ends
+with one path that leads out of the maze, and into quadrant 4.\\
+
+\subsubsection{Quadrant 4}
+Quadrant 4 starts inside a physical maze which will change between the testing
+phase of the challenge and the assessment.\\
+This maze  has physical walls above it, and must be navigated until it reaches a
+designated `finish line'
 
 \section{Methods}
 \subsection{Equipment}
 The AVC Project was based on a Raspberry Pi and the PCB.\\
 The Autonomous vehicle was built with a `PiCam' camera (provided), a pair of
-motors (provided), a LiFe , 2 `Sharp GP2Y0A41SK0F Analog Distance' sensors, a 3D printed
-chassis, and half a ping pong ball.
+motors (provided), a LiFe battery, 2 `Sharp GP2Y0A41SK0F Analog Distance'
+sensors, a 3D printed chassis, and half a ping pong ball.
 \subsection{Procedure}
 \begin{wrapfigure}{r}{0.5\textwidth}
 \begin{center}
@@ -199,15 +216,15 @@ being smaller than the raised portcullis vertically.\\
 \subsubsection{Software}
 The network code was first to be created, to deal with the \textit{portcullis}
 found in quadrant 1. The code in question sends a predetermined message to the
-server using the provided API. The server would return a message which would be
+server using the provided API.\@ The server would return a message which would be
 sent in a message to the server, this would cause the portcullis to raise and
 allow the vehicle to pass beneath. The code in question can be found in Appendix
-2.1.\\%TODO: add link and find the number l8r
+(9.2.1).\\
 
 The quadrant 2 code works by taking a picture with the `PiCam' and scanning the
 vertical middle of the picture taken. The average `whiteness' of the pixels is
 found, this was used as a threshold for whether a pixel was `white' or
-`black'.\\
+`black'. (See Appendix 9.2.3)\\
 
 The vertical middle pixels were read, and checked against the threshold value to
 see if they were `black' or `white'. Using the position of the pixel against the
@@ -216,15 +233,22 @@ multiplied by \verb|CONSTANT_PROPORTIONAL| to find which direction the line was
 in.\\
 
 A case was also added in this section for if the entire screen was black, and to
-reverse back until the line was found again.
+reverse back until the line was found again.\\
 
+For quadrant 3, at predefined vertical columns it checks across the image to
+find whether the average is greater than the average of the entire image.\\
+From this it derives whether there is a junction, and if it encounters a
+junction it carries out a predefined action. See Appendix 9.2.5.\\
+
+If the analogue sensors were below a specified value it assumes that there are
+walls around it and hence it is within the maze.\\
+
+Due to time constraints quadrant 4 (the maze), was not completed.\\
 
 \section{Results}
-The vehicle was unable to complete the course and ended half way through the
-third quadrant. Upon reaching a terminus of a line, instead of doing a $180\deg$
-turn. The vehicle went onto the `correct path'.\\
-The \verb|CONSTANT_PROPORTIONAL| was set to $500$. This reflects the fact that
-the 
+The vehicle only made it to half way through quadrant 3. In a time of %TODO:
+The value for $K_p=\frac{1}{500}$ (although in the code it is referenced as 500,
+but the operation is divided, thus the coefficient is $\frac{1}{500}$).
 
 \section{Discussion}
 \subsection{Team}
@@ -253,7 +277,9 @@ time together to keep development on track.\\
 The decision to not have a rear wheel and instead have a semi-sphere from a ping
 pong ball. This was made because it would give a greater ability to turn the
 vehicle and make the AVC more responsive to the change in environment. This was
-beneficial in the second quadrant\\
+beneficial in the second quadrant, which had tight bends, and other vehicles had
+been seen leaving the line and the team felt that this was a method of sticking
+to the line and prevent the vehicle from leaving the line.\\
 
 Late into the project the battery clip was redesigned such that the battery was
 more securely held without the screw touching the battery, this was so that in
@@ -269,20 +295,25 @@ existed.\\
 \subsection{Software}
 The co-efficient of proportionality is much higher then derivative which is
 higher than the integral response, to better respond to the present situation.\\
+
 Following a mistake by members of the team in the final weeks, an incorrectly
 merged git commit caused the loss of the weeks work, this resulted in the team
 being left even further behind then previously. From this the team decided to
-only make changes to the code via the github.com UI such that it is always upto
-date and so that no merge commits would have to be done\\
+only make changes to the code via the github.com UI such that it is always up to
+date and this would ensure that no merge commits would have to be done.\\
 
 Because of time restraints and loss of functioning PID code in the git merge,
 the teams took the decision to make a Proportional system as opposed to a PID
 one. The constant of proportionality was set to much higher than previously set
 and the the speed to be much lower. This would mean that less damping would be
 needed (via the differential component of PID) and it freed up development time
-to complete the third quadrant.\\
+to complete the third quadrant. Provided this experience a better response would
+have been to not have lost the code in the first place, but the system
+functioned well enough to complete the course\\
 
 \section{Conclusion}
+%TODO:
+The team wor
 
 \section{Bibliography}
 \printbibliography
@@ -363,15 +394,15 @@ to complete the third quadrant.\\
 \subsubsection{Networking for Portcullis}
 \begin{verbatim}
 void network(){
-char message[24];							// Assigns memory to password.
+  char message[24];							// Assigns memory to password.
 
-connect_to_server("130.195.6.196", 1024);	// Connects to Gate.
-send_to_server("Please");					// Requests permission.
+  connect_to_server("130.195.6.196", 1024);	// Connects to Gate.
+  send_to_server("Please");					// Requests permission.
 
-receive_from_server(message);				// Assigns the password to 'message'.
-send_to_server(message);					// Sends password to server
+  receive_from_server(message);				// Assigns the password to 'message'.
+  send_to_server(message);					// Sends password to server
 
-printf(message);
+  printf(message);
 }
 \end{verbatim}
 
@@ -387,39 +418,39 @@ set_motor(2, 0);
 \subsubsection{Average `whiteness' of a picture}
 \begin{verbatim}
 int determine_average(){
-int max = 0;
-int min = 255;
-int average;
+  int max = 0;
+  int min = 255;
+  int average;
 
-take_picture();							// Takes initial picture.
-for(int i = 0; i<320; i++){
+  take_picture();							// Takes initial picture.
+    for(int i = 0; i<320; i++){
 
-if(get_pixel(i, 120, 3)>max){		// Establishes Max.
-max = get_pixel(i, 120, 3);
-}
+    if(get_pixel(i, 120, 3)>max){		// Establishes Max.
+      max = get_pixel(i, 120, 3);
+    }
 
-if(get_pixel(i, 120, 3)<min){		// Establishes Min.
-min = get_pixel(i, 120, 3);
+    if(get_pixel(i, 120, 3)<min){		// Establishes Min.
+      min = get_pixel(i, 120, 3);
+    }
+    }
 
-}
-}
-
-average = (max+min)/2;
-return average;
+  average = (max+min)/2;
+  return average;
 }
 \end{verbatim}
+
 \subsubsection{Finding the white bias and hence direction of travel}
 \begin{verbatim}
 for(int i=0; i<320; i++){
 int error = average_error(i);
 
 if(error >= threshold){				// If RPi sees 'white'
-error = 1;						// Converts to binary represenation
-seeLine = true;					// The Line can be seen
-num_of_white++;
+  error = 1;						// Converts to binary represenation
+  seeLine = true;					// The Line can be seen
+  num_of_white++;
 }
 else{								// If RPi sees 'black'
-error = 0;						// Converts to binary representation
+  error = 0;						// Converts to binary representation
 }
 
 current_error = current_error + error*(i-160);
@@ -428,15 +459,132 @@ current_error = current_error + error*(i-160);
 Where \verb|average_error| is as follows:\\
 \begin{verbatim}
 int average_error(int i){
-int error1 = get_pixel(i, 116, 3);
-int error2 = get_pixel(i, 118, 3);
-int error3 = get_pixel(i, 120, 3);
-int error4 = get_pixel(i, 122, 3);
-int error5 = get_pixel(i, 124, 3);
+  int error1 = get_pixel(i, 116, 3);
+  int error2 = get_pixel(i, 118, 3);
+  int error3 = get_pixel(i, 120, 3);
+  int error4 = get_pixel(i, 122, 3);
+  int error5 = get_pixel(i, 124, 3);
 
-int average_error = (int) (error5+error4+error3+error2+error1)/5;
+  int average_error = (int) (error5+error4+error3+error2+error1)/5;
 
-return average_error;
+  return average_error;
 }
 \end{verbatim}
+
+\subsubsection{Finding the junction type}
+\begin{verbatim}
+bool seeLine = false;					// Whether or not the line can be seen.
+int current_error = 0;
+num_of_white = 0;
+take_picture();
+for(int i=0; i<320; i++){
+  int error = average_error(i);
+    if(error >= threshold){				// If RPi sees 'white'
+      error = 1;						// Converts to binary represenation
+      seeLine = true;					// The Line can be seen
+      num_of_white++;
+    }
+   else{								// If RPi sees 'black'
+     error = 0;	    					// Converts to binary representation
+   }
+  current_error = current_error + error*(i-160);
+}
+int proportional_signal = (int) (current_error/PROPORTIONAL);	//Sets proportional signal
+// Print checks:
+//printf("Current Error: %d\n", current_error);
+//printf("Proportional Signal: %d\n", proportional_signal);
+//printf("Number of White Pixels: %d\n", num_of_white);
+
+//Turn
+if(num_of_white > 120){
+  if(average_error(20) >= threshold){
+    leftpixel = 1;
+  }
+  else{
+    leftpixel = 0;
+  }
+
+  if(average_error(300) >= threshold) {
+    rightpixel = 1;
+  }
+  else{
+    rightpixel = 0;
+  }
+  if(get_pixel(160, 0, 3) >= threshold) {
+    frontpixel = 1;
+  }
+  else{
+    frontpixel = 0;
+  }
+
+
+  if(leftpixel == 1 && rightpixel == 0 && frontpixel == 1){
+    printf("Bend: -|, Turn: Front\n");
+    proportional_signal = 0;
+  }
+  else if(leftpixel == 0 && rightpixel == 1 && frontpixel == 1){
+    printf("Bend: |-, Turn: Front\n");
+    proportional_signal = 0;
+  }
+  else if(leftpixel == 1 && rightpixel == 0 && frontpixel == 0){
+    printf("Bend: L, Turn: Left\n");
+    proportional_signal = -25;
+  }
+  else if(leftpixel == 0 && rightpixel == 1 && frontpixel == 0){
+    printf("Bend: L, Turn: Right\n");
+    proportional_signal = 25;
+  }
+
+}
+if(leftpixel == 1 && rightpixel == 1 && frontpixel == 0){
+  printf("Bend: T, Turn: Left\n");
+  proportional_signal = -25;
+}
+
+if(seeLine){
+  set_motor(1, 35+proportional_signal);
+  set_motor(2, 35-proportional_signal);
+  proportional_signal_previous = proportional_signal;
+  Sleep(0,100000);
+}
+\end{verbatim}
+
+\subsection{Team Agreement}
+
+\subsubsection{Roles}
+\begin{tabularx}{\textwidth}{XX}
+Rhaz & Project Lead and Hardware/Software support (organising team meetings,
+reporting regularly on progress, debugging software committing to Git)\\
+Jacob & Software Development + Updating Git (writing core code and extending
+functionality)\\
+Mitchell & Software Testing (debugging software and committing to git, writing
+test cases and documenting performance against milestones)\\
+Theo & Hardware (building the chassis, testing components, connecting sensors,
+debugging hardware)\\
+Andrew McManaway & Software help (Commiting to Git. Documentation.)\\
+Julius Tilles & Hardware. Wasn't present for the first lab.\\
+\end{tabularx}
+
+\subsubsection{Agreement}
+By signing below, all team members are acknowledging that they have read and
+committed to their part in the AVC. They acknowledge that they will attempt to
+complete the tasks agreed on by the group each week and document this on the
+team github account. They acknowledge that failure to meet these goals can
+result in the team recommending any member receives a lesser grade for their AVC
+report. In the event that a team member is unable to complete their task due to
+circumstances beyond their control (i.e. sickness, bereavement etc) that they
+will inform the team at the earliest possible time. Finally, the team
+acknowledges that a member going a week without contact with other team members
+(except when discussed with the team in advance) will constitute the member in
+question being considered AWOL. In this instance the team agrees to inform the
+ENGR101 course co-ordinator immediately. The penalty this for this can range
+from a reduction in the final grade to immediate failure of the AVC (and thus
+the ENGR101 course). Should the team unanimously agree that a member (or
+members) have failed to contribute to the AVC sufficiently for other reasons, on
+the day of robot testing the team will be given the opportunity to anonymously
+vote for a team member to receive 0\% for the robot part of the AVC. Should the
+team choose this option they MUST be able to show that the member in question
+had been assigned tasks that they failed to complete and that the team had
+afforded them an opportunity to make up for past mistakes.
+
 \end{document}
